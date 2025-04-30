@@ -9,9 +9,10 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 add_executable(patrol_node src/patrol.cpp)
-ament_target_dependencies(patrol_node rclcpp sensor_msgs)
+ament_target_dependencies(patrol_node rclcpp sensor_msgs geometry_msgs)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -24,5 +25,15 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(TARGETS
+	patrol_node
+	DESTINATION lib/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+   launch rviz
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_package()
