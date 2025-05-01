@@ -1,0 +1,68 @@
+[0.212s] Invoking command in '/home/user/ros2_ws/src/robot_patrol/build/robot_patrol': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/simulations/ros2_sims_ws/install/rclrs_tests:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_client_service:/home/simulations/ros2_sims_ws/install/sensor_msgs_py:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_pub_sub:/home/simulations/ros2_sims_ws/install/examples_rclrs_message_demo:/home/simulations/ros2_sims_ws/install/rclrs:/home/simulations/ros2_sims_ws/install/rosidl_runtime_rs:/opt/ros/humble _=/usr/bin/env /usr/bin/cmake /home/user/ros2_ws/src/robot_patrol -DCMAKE_INSTALL_PREFIX=/home/user/ros2_ws/src/robot_patrol/install/robot_patrol
+[12.609s] -- The C compiler identification is GNU 11.3.0
+[17.749s] -- The CXX compiler identification is GNU 11.3.0
+[18.383s] -- Detecting C compiler ABI info
+[18.794s] -- Detecting C compiler ABI info - done
+[18.805s] -- Check for working C compiler: /usr/bin/cc - skipped
+[18.806s] -- Detecting C compile features
+[18.916s] -- Detecting C compile features - done
+[18.923s] -- Detecting CXX compiler ABI info
+[19.349s] -- Detecting CXX compiler ABI info - done
+[19.374s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[19.374s] -- Detecting CXX compile features
+[19.375s] -- Detecting CXX compile features - done
+[19.399s] -- Found ament_cmake: 1.3.4 (/opt/ros/humble/share/ament_cmake/cmake)
+[20.606s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.6") found components: Interpreter 
+[21.096s] -- Found rclcpp: 16.0.4 (/opt/ros/humble/share/rclcpp/cmake)
+[21.476s] -- Found rosidl_generator_c: 3.1.4 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[21.502s] -- Found rosidl_adapter: 3.1.4 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[21.560s] -- Found rosidl_generator_cpp: 3.1.4 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[21.624s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[21.715s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[22.358s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[22.386s] -- Found rmw_fastrtps_cpp: 6.2.2 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[23.752s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[23.834s] -- Found FastRTPS: /opt/ros/humble/include  
+[23.955s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[24.570s] -- Looking for pthread.h
+[26.336s] -- Looking for pthread.h - found
+[26.336s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[26.525s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[26.526s] -- Found Threads: TRUE  
+[27.588s] -- Found sensor_msgs: 4.2.3 (/home/simulations/ros2_sims_ws/install/sensor_msgs/share/sensor_msgs/cmake)
+[27.853s] -- Found ament_lint_auto: 0.12.6 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[28.118s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[28.118s] -- Configured cppcheck include dirs: 
+[28.119s] -- Configured cppcheck exclude dirs and/or files: 
+[28.123s] -- Added test 'flake8' to check Python code syntax and style conventions
+[28.132s] -- Added test 'lint_cmake' to check CMake code style
+[28.138s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[28.149s] -- Added test 'uncrustify' to check C / C++ code style
+[28.150s] -- Configured uncrustify additional arguments: 
+[28.152s] -- Added test 'xmllint' to check XML markup files
+[28.156s] -- Configuring done
+[28.174s] -- Generating done
+[28.177s] -- Build files have been written to: /home/user/ros2_ws/src/robot_patrol/build/robot_patrol
+[28.204s] Invoked command in '/home/user/ros2_ws/src/robot_patrol/build/robot_patrol' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/simulations/ros2_sims_ws/install/rclrs_tests:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_client_service:/home/simulations/ros2_sims_ws/install/sensor_msgs_py:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_pub_sub:/home/simulations/ros2_sims_ws/install/examples_rclrs_message_demo:/home/simulations/ros2_sims_ws/install/rclrs:/home/simulations/ros2_sims_ws/install/rosidl_runtime_rs:/opt/ros/humble _=/usr/bin/env /usr/bin/cmake /home/user/ros2_ws/src/robot_patrol -DCMAKE_INSTALL_PREFIX=/home/user/ros2_ws/src/robot_patrol/install/robot_patrol
+[28.204s] Invoking command in '/home/user/ros2_ws/src/robot_patrol/build/robot_patrol': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/simulations/ros2_sims_ws/install/rclrs_tests:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_client_service:/home/simulations/ros2_sims_ws/install/sensor_msgs_py:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_pub_sub:/home/simulations/ros2_sims_ws/install/examples_rclrs_message_demo:/home/simulations/ros2_sims_ws/install/rclrs:/home/simulations/ros2_sims_ws/install/rosidl_runtime_rs:/opt/ros/humble _=/usr/bin/env /usr/bin/cmake --build /home/user/ros2_ws/src/robot_patrol/build/robot_patrol -- -j8 -l8
+[28.312s] [ 50%] [32mBuilding CXX object CMakeFiles/patrol_node.dir/src/patrol.cpp.o[0m
+[43.776s] [01m[K/home/user/ros2_ws/src/robot_patrol/src/patrol.cpp:[m[K In member function '[01m[Kvoid Patrol::laser_scan_callback(const LaserScan&)[m[K':
+[43.776s] [01m[K/home/user/ros2_ws/src/robot_patrol/src/patrol.cpp:26:35:[m[K [01;31m[Kerror: [m[Kbase operand of '[01m[K->[m[K' has non-pointer type '[01m[Kconst LaserScan[m[K' {aka '[01m[Kconst sensor_msgs::msg::LaserScan_<std::allocator<void> >[m[K'}
+[43.776s]    26 | ont_range = (M_PI / 2) / msg[01;31m[K->[m[Kangle_increment;
+[43.776s]       |                             [01;31m[K^~[m[K
+[43.777s] 
+[43.777s] [01m[K/home/user/ros2_ws/src/robot_patrol/src/patrol.cpp:27:25:[m[K [01;31m[Kerror: [m[Kbase operand of '[01m[K->[m[K' has non-pointer type '[01m[Kconst LaserScan[m[K' {aka '[01m[Kconst sensor_msgs::msg::LaserScan_<std::allocator<void> >[m[K'}
+[43.777s]    27 |     front_ray = (0 - msg[01;31m[K->[m[Kangle_min) / msg->angle_increment;
+[43.777s]       |                         [01;31m[K^~[m[K
+[43.777s] [01m[K/home/user/ros2_ws/src/robot_patrol/src/patrol.cpp:27:43:[m[K [01;31m[Kerror: [m[Kbase operand of '[01m[K->[m[K' has non-pointer type '[01m[Kconst LaserScan[m[K' {aka '[01m[Kconst sensor_msgs::msg::LaserScan_<std::allocator<void> >[m[K'}
+[43.777s]    27 | = (0 - msg->angle_min) / msg[01;31m[K->[m[Kangle_increment;
+[43.777s]       |                             [01;31m[K^~[m[K
+[43.777s] 
+[43.778s] [01m[K/home/user/ros2_ws/src/robot_patrol/src/patrol.cpp:28:49:[m[K [01;31m[Kerror: [m[Kbase operand of '[01m[K->[m[K' has non-pointer type '[01m[Kconst LaserScan[m[K' {aka '[01m[Kconst sensor_msgs::msg::LaserScan_<std::allocator<void> >[m[K'}
+[43.778s]    28 |  (35.0 * M_PI / 180.0) / msg[01;31m[K->[m[Kangle_increment;
+[43.778s]       |                             [01;31m[K^~[m[K
+[43.778s] 
+[47.180s] gmake[2]: *** [CMakeFiles/patrol_node.dir/build.make:76: CMakeFiles/patrol_node.dir/src/patrol.cpp.o] Error 1
+[47.180s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/patrol_node.dir/all] Error 2
+[47.180s] gmake: *** [Makefile:146: all] Error 2
+[47.182s] Invoked command in '/home/user/ros2_ws/src/robot_patrol/build/robot_patrol' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/simulations/ros2_sims_ws/install/rclrs_tests:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_client_service:/home/simulations/ros2_sims_ws/install/sensor_msgs_py:/home/simulations/ros2_sims_ws/install/examples_rclrs_minimal_pub_sub:/home/simulations/ros2_sims_ws/install/examples_rclrs_message_demo:/home/simulations/ros2_sims_ws/install/rclrs:/home/simulations/ros2_sims_ws/install/rosidl_runtime_rs:/opt/ros/humble _=/usr/bin/env /usr/bin/cmake --build /home/user/ros2_ws/src/robot_patrol/build/robot_patrol -- -j8 -l8
