@@ -4,7 +4,6 @@
 #include <functional>
 #include <geometry_msgs/msg/twist.hpp>
 #include <iostream>
-#include <math.h>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <unistd.h>
@@ -26,11 +25,10 @@ public:
 
 private:
   void laser_scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
-    lasser_scan_msg = msg;
-
-    front_range = (M_PI / 2) / msg->angle_increment;
-    front_ray = (0 - msg->angle_min) / msg->angle_increment;
-    front_ray_view = (35.0 * M_PI / 180.0) / msg->angle_increment;
+    laser_scan_msg = msg;
+    front_ray = laser_scan_msg->ranges.size() / 2;
+    front_range = front_ray / 2;
+    front_ray_view = (25.0 * M_PI / 180.0) / msg->angle_increment;
   }
 
   float calculate_safe_direction() {
@@ -38,27 +36,27 @@ private:
     float largest_distance_ray = 0.0;
 
     for (int i = front_ray - front_range; i <= front_ray + front_range; i++) {
-      if (isinf(lasser_scan_msg->ranges[i])) {
+      if (isinf(laser_scan_msg->ranges[i])) {
         continue;
       }
 
-      if (lasser_scan_msg->ranges[i] > largest_distance_ray) {
-        largest_distance_ray = lasser_scan_msg->ranges[i];
+      if (laser_scan_msg->ranges[i] > largest_distance_ray) {
+        largest_distance_ray = laser_scan_msg->ranges[i];
         largest_distance_ray_idx = i;
       }
     }
 
     float direction_ =
-        (lasser_scan_msg->angle_min +
-         largest_distance_ray_idx * lasser_scan_msg->angle_increment);
+        laser_scan_msg->angle_min +
+        largest_distance_ray_idx * laser_scan_msg->angle_increment;
 
     return direction_;
   }
 
   bool is_obstacle_in_front() {
-    for (int i = front_ray - front_ray_view; i < front_ray + front_ray_view;
+    for (int i = front_ray - front_ray_view; i <= front_ray + front_ray_view;
          i++) {
-      if (lasser_scan_msg->ranges[i] < 0.35) {
+      if (laser_scan_msg->ranges[i] < 0.35) {
         RCLCPP_INFO(get_logger(),
                     "Obstacle detected - Calucating greatest distance...");
         return true;
@@ -69,25 +67,29 @@ private:
   }
 
   void control_loop() {
+    if (!laser_scan_msg) {
+      RCLCPP_ERROR(get_logger(), "Laser scan message has not been received");
+      return;
+    }
+
     cmd_vel_msg.linear.x = 0.1;
     cmd_vel_msg.angular.z = 0.0;
 
     if (is_obstacle_in_front()) {
       cmd_vel_msg.angular.z = calculate_safe_direction() / 2;
-      RCLCPP_INFO(get_logger(),
-                  "Calculated Safested direction - Rotating at angular z: %f",
+      RCLCPP_INFO(get_logger(), "Rotating on angular z - %f",
                   cmd_vel_msg.angular.z);
     }
 
     publisher_->publish(cmd_vel_msg);
   }
 
-  int front_range;
   int front_ray;
+  int front_range;
   int front_ray_view;
 
   geometry_msgs::msg::Twist cmd_vel_msg;
-  sensor_msgs::msg::LaserScan::SharedPtr lasser_scan_msg;
+  sensor_msgs::msg::LaserScan::SharedPtr laser_scan_msg;
 
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_;

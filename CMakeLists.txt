@@ -12,7 +12,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 add_executable(patrol_node src/patrol.cpp)
-ament_target_dependencies(patrol_node rclcpp sensor_msgs geometry_msgs)
+ament_target_dependencies(patrol_node rclcpp sensor_msgs geometry_msgs )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
