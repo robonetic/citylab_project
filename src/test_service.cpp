@@ -1,7 +1,3 @@
-#include "rclcpp/executors.hpp"
-#include "rclcpp/future_return_code.hpp"
-#include "rclcpp/logger.hpp"
-#include "rclcpp/logging.hpp"
 #include "robot_patrol/srv/get_direction.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include <chrono>
@@ -9,9 +5,10 @@
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
 
+using namespace std;
+using namespace std::chrono_literals;
 using std::placeholders::_1;
 using std::placeholders::_2;
-using namespace std::chrono_literals;
 
 class TestDirectionService : public rclcpp::Node {
 public:
@@ -24,27 +21,28 @@ public:
     laser_scan_sub_ = this->create_subscription<LaserScan>(
         "scan", 2,
         std::bind(&TestDirectionService::laser_scan_callback, this, _1));
+
+    RCLCPP_INFO(this->get_logger(), "Service Client Ready");
   }
 
 private:
   void laser_scan_callback(const LaserScan::SharedPtr msg) {
+    RCLCPP_INFO(this->get_logger(), "Service Request");
+
     auto request = std::make_shared<GetDirection::Request>();
     request->laser_data = *msg;
 
-    while (!direction_service_client_->wait_for_service(1s)) {
-      if (!rclcpp::ok()) {
-        RCLCPP_ERROR(rclcpp::get_logger("rclcpp"),
-                     "Interrupted while waiting for the service. Exiting.");
-        return;
-      }
-      RCLCPP_INFO(rclcpp::get_logger("rclcpp"),
+    if (!direction_service_client_->wait_for_service(1s)) {
+      RCLCPP_INFO(this->get_logger(),
                   "service not available, waiting again...");
+      return;
     }
 
-    auto result = direction_service_client_->async_send_request(
+    direction_service_client_->async_send_request(
         request, [this](rclcpp::Client<GetDirection>::SharedFuture result) {
-          RCLCPP_INFO(get_logger(), "Service Complete - Direction: %s",
-                      result.get()->direction);
+          string direction = result.get()->direction;
+          RCLCPP_INFO(this->get_logger(), "Service Response - %s",
+                      direction.c_str());
           rclcpp::shutdown();
         });
   }
