@@ -19,8 +19,7 @@ public:
     direction_service_client_ =
         this->create_client<GetDirection>("direction_service");
     laser_scan_sub_ = this->create_subscription<LaserScan>(
-        "scan", 2,
-        std::bind(&TestDirectionService::laser_scan_callback, this, _1));
+        "scan", 2, bind(&TestDirectionService::laser_scan_callback, this, _1));
 
     RCLCPP_INFO(this->get_logger(), "Service Client Ready");
   }
@@ -53,6 +52,6 @@ private:
 
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<TestDirectionService>());
+  rclcpp::spin(make_shared<TestDirectionService>());
   rclcpp::shutdown();
 }

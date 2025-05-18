@@ -1,4 +1,3 @@
-#include "rclcpp/logging.hpp"
 #include <chrono>
 #include <cmath>
 #include <functional>
@@ -15,9 +14,9 @@ using placeholders::_1;
 class Patrol : public rclcpp::Node {
 public:
   Patrol() : Node("patrol_node") {
-    subscriber_ = create_subscription<sensor_msgs::msg::LaserScan>(
+    laser_scan_sub_ = create_subscription<sensor_msgs::msg::LaserScan>(
         "scan", 2, bind(&Patrol::laser_scan_callback, this, _1));
-    publisher_ = create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+    cmd_vel_pub_ = create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
     timer_ = create_wall_timer(100ms, bind(&Patrol::control_loop, this));
 
     RCLCPP_INFO(get_logger(), "Robot initialized - Ready for patrol!");
@@ -81,19 +80,19 @@ private:
                   cmd_vel_msg.angular.z);
     }
 
-    publisher_->publish(cmd_vel_msg);
+    cmd_vel_pub_->publish(cmd_vel_msg);
   }
 
-  int front_ray;
-  int front_range;
-  int front_ray_view;
+  int front_ray = 0;
+  int front_range = 0;
+  int front_ray_view = 0;
 
   geometry_msgs::msg::Twist cmd_vel_msg;
   sensor_msgs::msg::LaserScan::SharedPtr laser_scan_msg;
 
   rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_sub_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
 };
 
 int main(int argc, char **argv) {

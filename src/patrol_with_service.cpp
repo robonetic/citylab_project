@@ -28,21 +28,33 @@ public:
     control_loop_timer_ =
         create_wall_timer(100ms, bind(&PatrolWithService::control_loop, this));
 
-    RCLCPP_INFO(get_logger(), "Robot initialized - Ready for patrol!");
+    RCLCPP_INFO(get_logger(), "Initialized, Service Client Ready!");
   }
 
 private:
   void laser_scan_callback(const LaserScan::SharedPtr msg) {
     laser_scan_msg = msg;
     front_ray = laser_scan_msg->ranges.size() / 2;
-    front_ray_view = (50.0 * M_PI / 180.0) / msg->angle_increment;
+    front_ray_view = (35.0 * M_PI / 180.0) / msg->angle_increment;
   }
 
   void control_loop() {
     if (!laser_scan_msg) {
-      RCLCPP_ERROR(get_logger(), "Laser scan message has not been received");
+      RCLCPP_ERROR(get_logger(), "Laser Scan Not Initialized");
       return;
     }
+
+    if (is_obstacle_in_front())
+      calculate_safe_direction();
+
+    if (direction_ == "RIGHT")
+      move(0.1, -0.5);
+
+    if (direction_ == "FRONT")
+      move(0.1, 0.0);
+
+    if (direction_ == "LEFT")
+      move(0.1, 0.5);
   }
 
   bool is_obstacle_in_front() {
@@ -51,11 +63,12 @@ private:
       if (laser_scan_msg->ranges[i] < 0.35)
         return true;
     }
-
+    direction_ = "FRONT";
     return false;
   }
 
-  void get_safe_direction() {
+  void calculate_safe_direction() {
+    RCLCPP_INFO(this->get_logger(), "Service Request");
     auto request = std::make_shared<GetDirection::Request>();
     request->laser_data = *laser_scan_msg;
 
@@ -65,7 +78,11 @@ private:
     }
 
     direction_service_client_->async_send_request(
-        request, [this](rclcpp::Client<GetDirection>::SharedFuture result) {});
+        request, [this](rclcpp::Client<GetDirection>::SharedFuture result) {
+          direction_ = result.get()->direction;
+          RCLCPP_INFO(this->get_logger(), "Service Response - %s",
+                      direction_.c_str());
+        });
   }
 
   void move(float linear, float angular) {
@@ -74,6 +91,7 @@ private:
     cmd_vel_pub_->publish(cmd_vel_msg);
   }
 
+  string direction_;
   int front_ray = 0;
   int front_range = 0;
   int front_ray_view = 0;
