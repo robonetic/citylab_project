@@ -1,4 +1,3 @@
-#include "rclcpp/logging.hpp"
 #include "robot_patrol/srv/get_direction.hpp"
 #include <chrono>
 #include <cmath>
@@ -35,7 +34,7 @@ private:
   void laser_scan_callback(const LaserScan::SharedPtr msg) {
     laser_scan_msg = msg;
     front_ray = laser_scan_msg->ranges.size() / 2;
-    front_ray_view = (35.0 * M_PI / 180.0) / msg->angle_increment;
+    front_ray_view = (25.0 * M_PI / 180.0) / msg->angle_increment;
   }
 
   void control_loop() {
@@ -63,7 +62,9 @@ private:
       if (laser_scan_msg->ranges[i] < 0.35)
         return true;
     }
+
     direction_ = "FRONT";
+
     return false;
   }
 

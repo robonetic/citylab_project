@@ -6,9 +6,9 @@
 #include <rclcpp/rclcpp.hpp>
 
 using namespace std;
-using namespace std::chrono_literals;
-using std::placeholders::_1;
-using std::placeholders::_2;
+using namespace chrono_literals;
+using placeholders::_1;
+using placeholders::_2;
 
 class TestDirectionService : public rclcpp::Node {
 public:

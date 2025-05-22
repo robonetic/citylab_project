@@ -26,15 +26,15 @@ private:
   void laser_scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
     laser_scan_msg = msg;
     front_ray = laser_scan_msg->ranges.size() / 2;
-    front_range = front_ray / 2;
     front_ray_view = (25.0 * M_PI / 180.0) / msg->angle_increment;
+    right_angle_index = front_ray / 2;
   }
 
   float calculate_safe_direction() {
     int largest_distance_ray_idx = 0;
     float largest_distance_ray = 0.0;
 
-    for (int i = front_ray - front_range; i <= front_ray + front_range; i++) {
+    for (int i = right_angle_index; i <= front_ray + right_angle_index; i++) {
       if (isinf(laser_scan_msg->ranges[i])) {
         continue;
       }
@@ -84,8 +84,8 @@ private:
   }
 
   int front_ray = 0;
-  int front_range = 0;
   int front_ray_view = 0;
+  int right_angle_index;
 
   geometry_msgs::msg::Twist cmd_vel_msg;
   sensor_msgs::msg::LaserScan::SharedPtr laser_scan_msg;
