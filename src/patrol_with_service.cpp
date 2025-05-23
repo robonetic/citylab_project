@@ -59,7 +59,11 @@ private:
   bool is_obstacle_in_front() {
     for (int i = front_ray - front_ray_view; i < front_ray + front_ray_view;
          i++) {
-      if (laser_scan_msg->ranges[i] <= 0.35)
+      /**
+      The real robot turns too late at 35 cm, seems to work just fine it
+      adjusted to 40 cm
+      **/
+      if (laser_scan_msg->ranges[i] <= 0.40)
         return true;
     }
 
