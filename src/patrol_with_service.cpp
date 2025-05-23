@@ -25,7 +25,7 @@ public:
     direction_service_client_ =
         create_client<GetDirection>("direction_service");
     control_loop_timer_ =
-        create_wall_timer(100ms, bind(&PatrolWithService::control_loop, this));
+        create_wall_timer(50ms, bind(&PatrolWithService::control_loop, this));
 
     RCLCPP_INFO(get_logger(), "Initialized, Service Client Ready!");
   }
@@ -34,7 +34,7 @@ private:
   void laser_scan_callback(const LaserScan::SharedPtr msg) {
     laser_scan_msg = msg;
     front_ray = laser_scan_msg->ranges.size() / 2;
-    front_ray_view = (25.0 * M_PI / 180.0) / msg->angle_increment;
+    front_ray_view = (30.0 * M_PI / 180.0) / msg->angle_increment;
   }
 
   void control_loop() {
@@ -57,9 +57,9 @@ private:
   }
 
   bool is_obstacle_in_front() {
-    for (int i = front_ray - front_ray_view; i <= front_ray + front_ray_view;
+    for (int i = front_ray - front_ray_view; i < front_ray + front_ray_view;
          i++) {
-      if (laser_scan_msg->ranges[i] < 0.35)
+      if (laser_scan_msg->ranges[i] <= 0.35)
         return true;
     }
 
